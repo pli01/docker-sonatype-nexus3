@@ -31,16 +31,17 @@ echo "Check nexus running"
 # setup test
 echo "# setup env test:"
 test_compose=docker-compose.yml
+test_service=nexus
 test_config=nexus-test.sh
-docker-compose -f $test_compose up -d --no-build nexus
-docker-compose  -f $test_compose ps
-container=$(docker-compose  -f $test_compose ps  | awk ' NR > 2 { print $1 }')
+docker-compose -f $test_compose up -d --no-build $test_service
+docker-compose -f $test_compose ps $test_service
+container=$(docker-compose  -f $test_compose ps -q $test_service)
 echo docker cp $test_config ${container}:/opt
 docker cp $test_config ${container}:/opt
 
 # run test
 echo "# run test:"
-docker-compose  -f $test_compose exec -T nexus /bin/bash -c "/opt/$test_config"
+docker-compose  -f $test_compose exec -T $test_service /bin/bash -c "/opt/$test_config"
 test_result=$?
 
 # teardown
