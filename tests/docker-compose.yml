@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  nexus:
+    image: ci-tool-stack/nexus3:${VERSION:-latest}
+    ports:
+      - "8081"
+      - "19081"
+    environment:
+      - NEXUS_CONTEXT=nexus
+#      - INSTALL4J_ADD_VM_PARAMS="-Xms2g -Xmx2g -XX:MaxDirectMemorySize=3g -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs"
