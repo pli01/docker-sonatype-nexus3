@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 image_name=${1:? $(basename $0) IMAGE_NAME VERSION needed}
 version=${2:-latest}
@@ -33,6 +34,9 @@ test_compose=docker-compose.yml
 test_config=nexus-test.sh
 docker-compose -f $test_compose up -d --no-build nexus
 container=$(docker-compose  -f $test_compose ps  | awk ' NR > 2 { print $1 }')
+ls -l $test_config
+
+echo docker cp $test_config ${container}:/opt
 docker cp $test_config ${container}:/opt
 
 # run test
