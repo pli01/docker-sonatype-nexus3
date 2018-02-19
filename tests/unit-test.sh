@@ -33,9 +33,8 @@ echo "# setup env test:"
 test_compose=docker-compose.yml
 test_config=nexus-test.sh
 docker-compose -f $test_compose up -d --no-build nexus
+docker-compose  -f $test_compose ps
 container=$(docker-compose  -f $test_compose ps  | awk ' NR > 2 { print $1 }')
-ls -l $test_config
-
 echo docker cp $test_config ${container}:/opt
 docker cp $test_config ${container}:/opt
 
