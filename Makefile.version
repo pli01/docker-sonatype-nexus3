@@ -1,0 +1,3 @@
+#
+PACKAGENAME ?= docker-sonatype-nexus3
+IMAGE_NAME ?= ci-tool-stack/nexus3
