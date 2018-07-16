@@ -25,8 +25,15 @@ prepare:
 	sed -e 's|\(FROM .*\):\(.*\)|\1:$(VERSION)|' Dockerfile.template > Dockerfile.$(VERSION)
 build: prepare config
 	$(sudo) VERSION=$(VERSION) docker-compose $(compose_args) build
-pull:
+
+pull:  pull-docker pull-docker-compose
+
+pull-docker: Dockerfile.$(VERSION)
+	docker_image=$$(grep ^FROM Dockerfile.$(VERSION) | awk ' { print $$2 }') ; \
+		     docker pull $$docker_image
+pull-docker-compose:
 	$(sudo) VERSION=$(VERSION) docker-compose $(compose_args) pull
+
 up:
 	$(sudo) docker-compose $(compose_args) up -d
 restart:
