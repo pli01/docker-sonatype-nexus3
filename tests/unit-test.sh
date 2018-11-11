@@ -2,7 +2,7 @@
 set -x
 
 image_name=${1:? $(basename $0) IMAGE_NAME VERSION needed}
-version=${2:-latest}
+VERSION=${2:-latest}
 namespace=nexus
 
 ret=0
